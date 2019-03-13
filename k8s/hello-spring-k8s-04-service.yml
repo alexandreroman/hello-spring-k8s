@@ -1,0 +1,27 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-lb
+  namespace: hello-spring-k8s
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    role: frontend
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: hello-spring-k8s
+spec:
+  ports:
+    - name: backend
+      port: 8080
+      protocol: TCP
+  selector:
+    role: backend

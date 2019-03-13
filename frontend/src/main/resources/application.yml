@@ -1,0 +1,9 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+
+services:
+  # Override this property to set where the backend is located.
+  backend: "http://localhost:8081"

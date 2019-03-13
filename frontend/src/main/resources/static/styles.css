@@ -1,0 +1,68 @@
+body {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 14px;
+    background: #222f38;
+    color: white;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 2em;
+    color: #7EB050;
+}
+
+a {
+    color: blue;
+}
+
+#container {
+    text-align: left;
+    margin: 5em auto;
+    padding: 1em;
+    color: black;
+    width: 80%;
+    max-width: 900px;
+    line-height: 1.5em;
+    background: white;
+    border: 1px solid darkgray;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+}
+
+.command {
+    margin: 0em 1em;
+    background: #444;
+    color: white;
+    padding: 0.5em;
+    border: 1px solid black;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+}
+
+footer {
+    margin: 0;
+    color: gray;
+    text-align: right;
+}
+
+#backend {
+    text-align: center;
+    margin: 3em;
+}
+
+.result {
+    font-weight: bold;
+    font-size: 250%;
+    color: #888;
+}
+
+@media (max-width: 800px) {
+    body {
+        font-size: 14px;
+    }
+
+    #container {
+        width: 90%;
+        max-width: fit-content;
+    }
+}

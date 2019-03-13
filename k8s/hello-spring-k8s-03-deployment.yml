@@ -1,0 +1,86 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: hello-spring-k8s
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: backend
+  template:
+    metadata:
+      labels:
+        role: backend
+    spec:
+      containers:
+        - name: backend
+          image: alexandreroman/hello-spring-k8s-backend
+          imagePullPolicy: Always
+          env:
+            - name: PORT
+              value: "8080"
+
+            # Set where to find a ConfigMap for this pod (namespace and name).
+            - name: SPRING_CLOUD_KUBERNETES_CONFIG_NAMESPACE
+              value: "hello-spring-k8s"
+            - name: SPRING_CLOUD_KUBERNETES_CONFIG_NAME
+              value: "backend"
+
+            # You need to enable this actuator endpoint to support ConfigMap reloading.
+            - name: MANAGEMENT_ENDPOINT_RESTART_ENABLED
+              value: "true"
+            # Enable ConfigMap reloading (disabled by default).
+            - name: SPRING_CLOUD_KUBERNETES_RELOAD_ENABLED
+              value: "true"
+            - name: SPRING_CLOUD_KUBERNETES_RELOAD_STRATEGY
+              value: "refresh" # choose between refresh, restart_context or shutdown
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              port: 8080
+              path: /actuator/health
+            initialDelaySeconds: 60
+          readinessProbe:
+            httpGet:
+              port: 8080
+              path: /actuator/health
+            initialDelaySeconds: 15
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: hello-spring-k8s
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: frontend
+  template:
+    metadata:
+      labels:
+        role: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: alexandreroman/hello-spring-k8s-frontend
+          imagePullPolicy: Always
+          env:
+            # Set backend address using its K8s service name.
+            - name: SERVICES_BACKEND
+              value: "http://backend:8080"
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              port: 8080
+              path: /actuator/health
+            initialDelaySeconds: 60
+          readinessProbe:
+            httpGet:
+              port: 8080
+              path: /actuator/health
+            initialDelaySeconds: 15

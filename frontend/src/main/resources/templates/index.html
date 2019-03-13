@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv=" Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello Spring on Kubernetes</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/normalize.css@8.0.0/normalize.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="container">
+    <header>
+        <img src="spring.png" alt="Spring Framework"/>
+        <h1>Hello Spring on Kubernetes</h1>
+    </header>
+
+    <p>This application is using
+        <a href="https://spring.io/projects/spring-cloud-kubernetes">Spring Cloud Kubernetes</a>
+        to connect a frontend app and a backend app.
+    </p>
+
+    <p>App container images are built using <a href="https://buildpacks.io">Cloud Native Buildpacks</a>
+        (look Ma, no Dockerfile!):</p>
+    <p class="command"><code>$ pack build myrepo/myimage --builder=nebhale/java-build</code></p>
+
+    <p>Try scaling out backend app instances, and see client-side load balancing & service discovery in action:</p>
+    <p class="command"><code>$ kubectl -n hello-spring-k8s scale --replicas=2 deployment backend</code></p>
+
+    <p>Edit ConfigMap objects and see how the new configuration is applied:</p>
+    <p class="command"><code>$ kubectl -n hello-spring-k8s edit configmap backend</code></p>
+
+    <div id="backend">
+        <p><span class="result" th:text="${message}">Hello world!</span></p>
+        <p>from <span class="result" th:text="${source}">backend.hostname</span></p>
+    </div>
+
+    <footer>
+        <p>Copyright &copy; 2019 <a href="https://pivotal.io">
+            <img align="Pivotal Software Inc." src="pivotal.png"/></a></p>
+    </footer>
+</div>
+
+<a href="https://github.com/alexandreroman/hello-spring-k8s"><img
+        style="position: absolute; top: 0; right: 0; border: 0;"
+        src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
+        alt="Fork me on GitHub"></a>
+</body>
+</html>

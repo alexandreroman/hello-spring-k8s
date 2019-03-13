@@ -1,0 +1,9 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: backend
+  namespace: hello-spring-k8s
+data:
+  application.yml: |-
+    backend:
+      message: "Hello world!"
