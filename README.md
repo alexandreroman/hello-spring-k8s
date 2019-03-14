@@ -11,7 +11,7 @@ and circuit breaker patterns.
 
 <img src="https://i.imgur.com/ONL4XgA.png" alt="App screenshot"/>
 
-Source code does not depend on any Kubernetes library, just plain
+Source code does not depend on Kubernetes at all, just plain
 Spring stuff. See for example the backend source code:
 ```java
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -81,7 +81,7 @@ This repository contains 2 apps: a [backend](backend) and a [frontend](frontend)
 
 Note there is no `Dockerfile` available in this repository.
 [Cloud Native Buildpacks](https://buildpacks.io) are used to
-build and package each app into a fully secured & optimized
+build and package each app into a fully secure & optimized
 Docker image,
 
 Run this command to create a Docker image for each app:
