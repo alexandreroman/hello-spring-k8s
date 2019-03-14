@@ -112,6 +112,8 @@ deployment.apps/backend created
 deployment.apps/frontend created
 service/frontend-lb created
 service/backend created
+clusterrole.rbac.authorization.k8s.io/service-discovery-client created
+rolebinding.rbac.authorization.k8s.io/default:service-discovery-client created
 ```
 
 Check the `LoadBalancer` allocated IP address to get the public app endpoint:
