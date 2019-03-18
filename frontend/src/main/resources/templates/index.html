@@ -24,7 +24,7 @@
 
     <p>App container images are built using <a href="https://buildpacks.io">Cloud Native Buildpacks</a>
         (look Ma, no Dockerfile!):</p>
-    <p class="command"><code>$ pack build myrepo/myimage --builder=nebhale/java-build</code></p>
+    <p class="command"><code>$ pack build myrepo/myimage</code></p>
 
     <p>Try scaling out backend app instances, and see client-side load balancing & service discovery in action:</p>
     <p class="command"><code>$ kubectl -n hello-spring-k8s scale --replicas=2 deployment backend</code></p>

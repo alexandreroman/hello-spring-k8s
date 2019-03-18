@@ -87,9 +87,9 @@ Docker image,
 Run this command to create a Docker image for each app:
 ```bash
 $ pack build alexandreroman/hello-spring-k8s-backend \
-  --path backend --builder=nebhale/java-build
+  --path backend
 $ pack build alexandreroman/hello-spring-k8s-frontend \
-  --path frontend --builder=nebhale/java-build
+  --path frontend
 ```
 
 You can see how these Docker images are created:
