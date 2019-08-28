@@ -20,12 +20,15 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +36,7 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 @EnableDiscoveryClient
+@EnableFeignClients
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
@@ -50,14 +54,12 @@ public class Application {
 @Slf4j
 @RequiredArgsConstructor
 class IndexController {
-    private final RestTemplate client;
-    @Value("${services.backend}")
-    private String backendAddress;
+    private final BackendClientService client;
 
     @GetMapping("/")
     public String index(Model model) {
-        log.info("Calling backend: {}", backendAddress);
-        final HelloResponse result = client.getForObject(backendAddress, HelloResponse.class);
+        log.info("Calling backend");
+        final HelloResponse result = client.greetings();
         log.info("Received result from backend: {}", result);
 
         model.addAttribute("message", result.getMessage());
@@ -72,4 +74,27 @@ class IndexController {
 class HelloResponse {
     private String message;
     private String source;
+}
+
+@FeignClient(name = "hello-spring-k8s-backend",
+        url = "${services.backend}",
+        fallback = BackendClientServiceFallback.class)
+interface BackendClientService {
+    @GetMapping("/")
+    HelloResponse greetings();
+}
+
+@Lazy
+@Component
+@Slf4j
+class BackendClientServiceFallback implements BackendClientService {
+    @Override
+    public HelloResponse greetings() {
+        log.warn("Failed to call backend service: using fallback response");
+
+        final HelloResponse resp = new HelloResponse();
+        resp.setMessage("Your backend is in another castle");
+        resp.setSource("fallback implementation");
+        return resp;
+    }
 }

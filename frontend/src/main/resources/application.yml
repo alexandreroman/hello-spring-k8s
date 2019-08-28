@@ -4,6 +4,10 @@ management:
       exposure:
         include: health, prometheus
 
+feign:
+  hystrix:
+    enabled: true
+
 services:
-  # Override this property to set where the backend is located.
-  backend: "http://localhost:8081"
+  # This property is only used when running locally.
+  backend: http://localhost:8081

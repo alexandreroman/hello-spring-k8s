@@ -1,0 +1,4 @@
+services:
+  # When the app is deployed to Kubernetes,
+  # we rely on service discovery to locate backend instances.
+  backend: ""
