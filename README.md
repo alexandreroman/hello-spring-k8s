@@ -110,7 +110,7 @@ namespace/hello-spring-k8s created
 configmap/backend created
 deployment.apps/backend created
 deployment.apps/frontend created
-service/frontend-lb created
+service/frontend created
 service/backend created
 clusterrole.rbac.authorization.k8s.io/service-discovery-client created
 rolebinding.rbac.authorization.k8s.io/default:service-discovery-client created
@@ -118,9 +118,9 @@ rolebinding.rbac.authorization.k8s.io/default:service-discovery-client created
 
 Check the `LoadBalancer` allocated IP address to get the public app endpoint:
 ```bash
-$ kubectl -n hello-spring-k8s get svc frontend-lb
+$ kubectl -n hello-spring-k8s get svc frontend
 NAME          TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
-frontend-lb   LoadBalancer   10.97.52.148   X.X.X.X       80:32686/TCP   110s
+frontend      LoadBalancer   10.97.52.148   X.X.X.X       80:32686/TCP   110s
 ```
 
 Scale out the backend app, and see service discovery and client-side load balancing

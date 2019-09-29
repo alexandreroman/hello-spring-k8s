@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend-lb
+  name: frontend
   namespace: hello-spring-k8s
 spec:
   type: LoadBalancer
