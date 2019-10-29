@@ -22,6 +22,9 @@ spec:
         - name: backend
           image: alexandreroman/hello-spring-k8s-backend
           imagePullPolicy: Always
+          resources:
+            limits:
+              memory: 1Gi
           env:
             - name: PORT
               value: "8080"
@@ -76,6 +79,9 @@ spec:
         - name: frontend
           image: alexandreroman/hello-spring-k8s-frontend
           imagePullPolicy: Always
+          resources:
+            limits:
+              memory: 1Gi
           env:
             # Set backend address using its K8s service name.
             - name: SERVICES_BACKEND
